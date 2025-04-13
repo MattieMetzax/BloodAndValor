@@ -1,24 +1,17 @@
 {
   "name": "blood-and-valor",
   "version": "1.0.0",
-  "description": "\"Frontend for Blood & Valor Kingdom Strategy Game\"",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",     // This script is required for production builds
+    "serve": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MattieMetzax/BloodAndValor.git"
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
-  "keywords": [
-    "strategy",
-    "game",
-    "frontend"
-  ],
-  "author": "Mattie Sojcik",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MattieMetzax/BloodAndValor/issues"
-  },
-  "homepage": "https://github.com/MattieMetzax/BloodAndValor#readme"
+  "devDependencies": {
+    "vite": "^4.0.0"
+  }
 }
