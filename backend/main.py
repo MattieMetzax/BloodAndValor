@@ -10,6 +10,8 @@ from logic.image_tile_generator import generate_map_from_image
 from player_data import create_player, get_player
 from fastapi.middleware.cors import CORSMiddleware
 
+app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # or specify your Vercel domain
@@ -17,8 +19,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-app = FastAPI()
 
 @app.get("/")
 def root():
