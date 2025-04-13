@@ -1,49 +1,49 @@
-// frontend/src/App.js
 import React, { useState, useEffect } from "react";
-import "./styles.css";
 
 function App() {
-  const [mapData, setMapData] = useState([]);
   const [playerInfo, setPlayerInfo] = useState(null);
+  const [mapData, setMapData] = useState([]);
+  const [playerId, setPlayerId] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
 
+  const apiUrl = "https://bloodandvalor.onrender.com"; // Backend base URL
+
+  // Fetch Map Data
   const fetchMap = async () => {
-    const res = await fetch("https://bloodandvalor.onrender.com/get-map/");
-    const data = await res.json();
+    const response = await fetch(`${apiUrl}/get-map/`);
+    const data = await response.json();
     setMapData(data.map);
   };
 
-const createPlayer = async () => {
-  const playerId = "player_001";
-  const name = "Michaela";
-  const password = "your_secure_password"; // Replace or input dynamically
+  // Register Player
+  const registerPlayer = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`${apiUrl}/register/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ player_id: playerId, name, password }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      alert(data.message);
+      setPlayerId("");
+      setName("");
+      setPassword("");
+    } else {
+      alert(`Registration failed: ${data.detail}`);
+    }
+  };
 
-  const res = await fetch("https://bloodandvalor.onrender.com/register/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      player_id: playerId,
-      name: name,
-      password: password,
-    }),
-  });
-
-  if (res.ok) {
-    const data = await res.json();
-    console.log("Registered:", data);
-    fetchPlayer(playerId);
-  } else {
-    const error = await res.json();
-    console.error("Registration failed:", error.detail);
-    alert("Registration failed: " + error.detail);
-  }
-};
-
+  // Fetch Player Info
   const fetchPlayer = async (playerId) => {
-    const res = await fetch(`https://bloodandvalor.onrender.com/player/${playerId}`);
-    const data = await res.json();
-    setPlayerInfo(data);
+    const response = await fetch(`${apiUrl}/player/${playerId}`);
+    if (response.ok) {
+      const data = await response.json();
+      setPlayerInfo(data);
+    } else {
+      alert("Player not found.");
+    }
   };
 
   useEffect(() => {
@@ -52,25 +52,59 @@ const createPlayer = async () => {
 
   return (
     <div className="App">
-      <h1>Kingdom Strategy Game</h1>
-      <button onClick={createPlayer}>Create Player</button>
+      <header>
+        <h1>Blood & Valor</h1>
+        <p>Kingdom Strategy Game</p>
+      </header>
+
+      <div>
+        {/* Registration Form */}
+        <form onSubmit={registerPlayer}>
+          <h2>Register</h2>
+          <input
+            type="text"
+            placeholder="Player ID"
+            value={playerId}
+            onChange={(e) => setPlayerId(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Register</button>
+        </form>
+      </div>
+
+      <div>
+        <h2>Map</h2>
+        <div className="map-grid">
+          {mapData.map((tile, index) => (
+            <div key={index} className={`tile ${tile.tile_type}`}>
+              {tile.tile_type}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {playerInfo && (
-        <div className="player-info">
+        <div>
           <h2>Player Info</h2>
           <p>ID: {playerInfo.id}</p>
           <p>Name: {playerInfo.name}</p>
           <p>Coins: {playerInfo.coins}</p>
-          <p>Well-Being: {playerInfo.well_being}</p>
         </div>
       )}
-      <h2>Map Data</h2>
-      <div className="map">
-        {mapData.map((tile, index) => (
-          <div key={index} className={`tile ${tile.tile_type}`}>
-            {tile.tile_type}
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

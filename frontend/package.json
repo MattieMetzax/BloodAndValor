@@ -1,23 +1,18 @@
 {
-  "name": "frontend",
+  "name": "kingdom-strategy-game",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",                 
-    "build": "vite build",         
-    "serve": "vite preview",       
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "vite": "^4.0.0"
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
+    "vite": "^4.0.0",
     "vite-plugin-react": "^1.0.0"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  }
 }

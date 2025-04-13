@@ -1,20 +1,18 @@
-# backend/main.py
 from fastapi import FastAPI, HTTPException, UploadFile, File, Body
-from typing import List
-import io
-
+from fastapi.middleware.cors import CORSMiddleware
 from models import Tile, Player
 from db import game_state
 from logic.tile_generator import generate_world_map
 from player_data import create_player, get_player, players
 from auth import register_player, authenticate_player
-from fastapi.middleware.cors import CORSMiddleware
+import io
+from PIL import Image
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://blood-and-valor.vercel.app"],  # For production, specify your frontend domain
+    allow_origins=["https://your-vercel-domain.vercel.app"],  # Update with your actual frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,7 +22,6 @@ app.add_middleware(
 def root():
     return {"message": "Welcome to Kingdom Strategy Game Backend"}
 
-# Map endpoints
 @app.post("/generate-map/")
 def regenerate_map(width: int = 20, height: int = 20):
     game_state["tiles"] = generate_world_map(width, height)
@@ -33,7 +30,6 @@ def regenerate_map(width: int = 20, height: int = 20):
 @app.post("/upload-map/")
 async def upload_map(file: UploadFile = File(...)):
     content = await file.read()
-    from PIL import Image
     image = Image.open(io.BytesIO(content)).convert("RGB")
     tiles = []
     tile_id = 1
@@ -65,26 +61,16 @@ async def upload_map(file: UploadFile = File(...)):
 def get_map():
     return {"map": [tile.dict() for tile in game_state["tiles"]]}
 
-# Player endpoints
 @app.post("/register/")
-def register(
-    player_id: str = Body(...),
-    name: str = Body(...),
-    password: str = Body(...)
-):
+def register(player_id: str = Body(...), name: str = Body(...), password: str = Body(...)):
     if not register_player(player_id, name, password):
         raise HTTPException(status_code=400, detail="Player already exists.")
     return {"message": f"Player {player_id} registered successfully."}
 
 @app.post("/login/")
-def login(
-    player_id: str = Body(...),
-    password: str = Body(...)
-):
+def login(player_id: str = Body(...), password: str = Body(...)):
     if not authenticate_player(player_id, password):
         raise HTTPException(status_code=401, detail="Invalid credentials.")
-    # For now, we simply return a success message.
-    # In a production system, you would return a token (e.g., JWT) here.
     return {"message": f"Player {player_id} logged in successfully."}
 
 @app.get("/player/{player_id}")
