@@ -1,5 +1,6 @@
 // In LoginScreen.jsx
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function LoginScreen({ onLogin, onSwitchToRegister }) {
   const [username, setUsername] = useState("");
@@ -35,13 +36,10 @@ function LoginScreen({ onLogin, onSwitchToRegister }) {
         <button type="submit">Login</button>
       </form>
       <p>
-        Don't have an account?{" "}
-        <span
-          onClick={onSwitchToRegister}
-          style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
-        >
-          Register
-        </span>
+  	Don't have an account?{" "}
+  	<Link to="/register" style={{ color: "blue", textDecoration: "underline" }}>
+    		Register
+  	</Link>
       </p>
     </div>
   );
