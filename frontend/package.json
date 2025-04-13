@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",                 // For local development
-    "build": "vite build",         // For building the production version
-    "serve": "vite preview",       // For previewing the production build
+    "dev": "vite",                 
+    "build": "vite build",         
+    "serve": "vite preview",       
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
