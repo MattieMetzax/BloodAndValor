@@ -1,5 +1,5 @@
 # backend/db.py
-from models import Tile, Player
+from backend.models import Tile, Player
 
 # Simulated in-memory database
 game_state = {

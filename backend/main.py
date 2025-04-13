@@ -3,11 +3,11 @@ from fastapi import FastAPI, HTTPException, UploadFile, File
 from typing import List
 import io
 
-from models import Tile, Player
-from db import game_state
-from logic.tile_generator import generate_world_map
-from logic.image_tile_generator import generate_map_from_image
-from player_data import create_player, get_player
+from backend.models import Tile, Player
+from backend.db import game_state
+from backend.logic.tile_generator import generate_world_map
+from backend.logic.image_tile_generator import generate_map_from_image
+from backend.player_data import create_player, get_player
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()

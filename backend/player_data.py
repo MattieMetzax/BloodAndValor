@@ -1,6 +1,6 @@
 # backend/player_data.py
 
-from models import Player
+from backend.models import Player
 
 players = {}
 

@@ -1,7 +1,7 @@
 # backend/logic/tile_generator.py
 import random
 from typing import List
-from models import Tile
+from backend.models import Tile
 
 TILE_TYPES = {
     "plains": 0.25,
