@@ -12,16 +12,33 @@ function App() {
     setMapData(data.map);
   };
 
-  const createPlayer = async () => {
-    // Replace with desired player ID and name
-    const playerId = "player_001";
-    const res = await fetch(`http://localhost:8000/create-player/${playerId}?name=Michaela`, {
-      method: "POST",
-    });
+const createPlayer = async () => {
+  const playerId = "player_001";
+  const name = "Michaela";
+  const password = "your_secure_password"; // Replace or input dynamically
+
+  const res = await fetch("http://localhost:8000/register/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      player_id: playerId,
+      name: name,
+      password: password,
+    }),
+  });
+
+  if (res.ok) {
     const data = await res.json();
-    console.log(data);
+    console.log("Registered:", data);
     fetchPlayer(playerId);
-  };
+  } else {
+    const error = await res.json();
+    console.error("Registration failed:", error.detail);
+    alert("Registration failed: " + error.detail);
+  }
+};
 
   const fetchPlayer = async (playerId) => {
     const res = await fetch(`http://localhost:8000/player/${playerId}`);
