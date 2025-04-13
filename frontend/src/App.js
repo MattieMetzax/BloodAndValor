@@ -1,136 +1,82 @@
+// src/App.js
 import React, { useState, useEffect } from "react";
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState("login"); // Should default to 'login'
-  const [playerId, setPlayerId] = useState("");
-  const [password, setPassword] = useState("");
-  const [mapData, setMapData] = useState([]);
+  // For demonstration purposes, we initialize with "login" screen.
+  const [currentScreen, setCurrentScreen] = useState("login");
 
-  const apiUrl = "https://bloodandvalor.onrender.com";
+  // Log the current screen to help with debugging in the console.
+  useEffect(() => {
+    console.log("Current screen:", currentScreen);
+  }, [currentScreen]);
 
-  // Fetch Map Data
-  const fetchMap = async () => {
-    const response = await fetch(`${apiUrl}/get-map/`);
-    const data = await response.json();
-    setMapData(data.map);
-  };
-
-  // Handle Login
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const response = await fetch(`${apiUrl}/login/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ player_id: playerId, password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      alert(data.message);
-      setCurrentScreen("map");
-      fetchMap();
-    } else {
-      alert(`Login failed: ${data.detail}`);
-    }
-  };
-
-  // Handle Registration
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    const response = await fetch(`${apiUrl}/register/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ player_id: playerId, password, name: "Player Name" }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      alert(data.message);
-      setCurrentScreen("login");
-    } else {
-      alert(`Registration failed: ${data.detail}`);
-    }
-  };
-
-  // Render Screens
+  // Render different screens based on state.
   const renderScreen = () => {
-    switch (currentScreen) {
-      case "login":
-        return (
-          <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-              <input
-                type="text"
-                placeholder="Player ID"
-                value={playerId}
-                onChange={(e) => setPlayerId(e.target.value)}
-                required
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <button type="submit">Login</button>
-            </form>
-            <p>
-              Don't have an account?{" "}
-              <span style={{ cursor: "pointer", color: "blue" }} onClick={() => setCurrentScreen("register")}>
-                Register
-              </span>
-            </p>
-          </div>
-        );
-      case "register":
-        return (
-          <div>
-            <h2>Register</h2>
-            <form onSubmit={handleRegister}>
-              <input
-                type="text"
-                placeholder="Player ID"
-                value={playerId}
-                onChange={(e) => setPlayerId(e.target.value)}
-                required
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <button type="submit">Register</button>
-            </form>
-            <p>
-              Already have an account?{" "}
-              <span style={{ cursor: "pointer", color: "blue" }} onClick={() => setCurrentScreen("login")}>
-                Login
-              </span>
-            </p>
-          </div>
-        );
-      case "map":
-        return (
-          <div>
-            <h2>World Map</h2>
-            <div className="map-grid">
-              {mapData.map((tile, index) => (
-                <div key={index} className={`tile ${tile.tile_type}`}>
-                  {tile.tile_type}
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      default:
-        return null;
+    if (currentScreen === "login") {
+      return (
+        <div className="screen login-screen">
+          <h1>Login Screen</h1>
+          <form>
+            <input type="text" placeholder="Player ID" />
+            <input type="password" placeholder="Password" />
+            <button type="button" onClick={() => setCurrentScreen("map")}>
+              Login
+            </button>
+          </form>
+          <p>
+            Don't have an account?{" "}
+            <span
+              className="link"
+              onClick={() => setCurrentScreen("register")}
+              style={{ cursor: "pointer", textDecoration: "underline" }}
+            >
+              Register
+            </span>
+          </p>
+        </div>
+      );
+    } else if (currentScreen === "register") {
+      return (
+        <div className="screen register-screen">
+          <h1>Register Screen</h1>
+          <form>
+            <input type="text" placeholder="Player ID" />
+            <input type="text" placeholder="Name" />
+            <input type="password" placeholder="Password" />
+            <button type="button" onClick={() => setCurrentScreen("login")}>
+              Register
+            </button>
+          </form>
+          <p>
+            Already have an account?{" "}
+            <span
+              className="link"
+              onClick={() => setCurrentScreen("login")}
+              style={{ cursor: "pointer", textDecoration: "underline" }}
+            >
+              Login
+            </span>
+          </p>
+        </div>
+      );
+    } else if (currentScreen === "map") {
+      return (
+        <div className="screen map-screen">
+          <h1>World Map</h1>
+          <p>Your map will be displayed here.</p>
+          <button type="button" onClick={() => setCurrentScreen("login")}>
+            Logout
+          </button>
+        </div>
+      );
+    } else {
+      return <div>Loading...</div>;
     }
   };
 
   return (
     <div className="App">
+      {/* Simple header for the app */}
       <header>
         <h1>Blood & Valor</h1>
       </header>
