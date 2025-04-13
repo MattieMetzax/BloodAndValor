@@ -7,7 +7,7 @@ function App() {
   const [playerInfo, setPlayerInfo] = useState(null);
 
   const fetchMap = async () => {
-    const res = await fetch("http://localhost:8000/get-map/");
+    const res = await fetch("https://bloodandvalor.onrender.com/get-map/");
     const data = await res.json();
     setMapData(data.map);
   };
@@ -17,7 +17,7 @@ const createPlayer = async () => {
   const name = "Michaela";
   const password = "your_secure_password"; // Replace or input dynamically
 
-  const res = await fetch("http://localhost:8000/register/", {
+  const res = await fetch("https://bloodandvalor.onrender.com/register/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const createPlayer = async () => {
 };
 
   const fetchPlayer = async (playerId) => {
-    const res = await fetch(`http://localhost:8000/player/${playerId}`);
+    const res = await fetch(`https://bloodandvalor.onrender.com/player/${playerId}`);
     const data = await res.json();
     setPlayerInfo(data);
   };
