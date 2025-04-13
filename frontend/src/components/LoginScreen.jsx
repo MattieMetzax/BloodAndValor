@@ -7,7 +7,7 @@ function LoginScreen({ onLogin, onSwitchToRegister }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username && password) {
-      // Replace with API call if needed
+      // Replace with actual login logic
       onLogin({ username });
     } else {
       alert("Please enter both username and password.");
@@ -38,7 +38,11 @@ function LoginScreen({ onLogin, onSwitchToRegister }) {
         Don't have an account?{" "}
         <span
           onClick={onSwitchToRegister}
-          style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+          style={{
+            cursor: "pointer",
+            color: "blue",
+            textDecoration: "underline"
+          }}
         >
           Register
         </span>
