@@ -13,7 +13,7 @@ COLOR_TO_TILE = {
     (0, 105, 148): "ocean"        # Blue for ocean
 }
 
-def generate_map_from_image(image_path: str) -> List[Tile]:
+def generate_world_map(image_path: str) -> List[Tile]:
     """
     Reads an image from the given path and generates a list of Tile objects.
     
