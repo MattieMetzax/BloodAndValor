@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState("login"); // login, register, or map
+  const [currentScreen, setCurrentScreen] = useState("login"); // Should default to 'login'
   const [playerId, setPlayerId] = useState("");
   const [password, setPassword] = useState("");
   const [mapData, setMapData] = useState([]);
