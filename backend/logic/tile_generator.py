@@ -1,6 +1,6 @@
 from PIL import Image
 from typing import List
-from backend.models import Tile
+from models import Tile
 
 # Define the mapping from RGB colors to tile types.
 # Ensure these colors match exactly the ones in your reference image.
