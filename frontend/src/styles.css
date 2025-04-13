@@ -1,45 +1,51 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+}
+
+.app-container {
+  max-width: 800px;
+  margin: 20px auto;
   padding: 20px;
+  text-align: center;
 }
 
-.map-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 50px);
-  gap: 5px;
-  justify-content: center;
+header {
+  margin-bottom: 20px;
 }
 
-.tile {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ccc;
-  font-size: 10px;
+.screen {
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
 }
 
-.tile.plains {
-  background-color: #90ee90;
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-.tile.forest {
-  background-color: #228b22;
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.tile.mountain {
-  background-color: #808080;
-}
-
-.tile.desert {
-  background-color: #edc9af;
-}
-
-.tile.marsh {
-  background-color: #556b2f;
-}
-
-.tile.ocean {
-  background-color: #006994;
+button:hover {
+  background-color: #0056b3;
 }

@@ -1,86 +1,56 @@
-// src/App.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import LoginScreen from "./components/LoginScreen";
+import RegisterScreen from "./components/RegisterScreen";
+import MapScreen from "./components/MapScreen";
 
 function App() {
-  // For demonstration purposes, we initialize with "login" screen.
-  const [currentScreen, setCurrentScreen] = useState("login");
+  const [currentScreen, setCurrentScreen] = useState("login"); // options: 'login', 'register', 'map'
+  const [user, setUser] = useState(null);
 
-  // Log the current screen to help with debugging in the console.
-  useEffect(() => {
-    console.log("Current screen:", currentScreen);
-  }, [currentScreen]);
-
-  // Render different screens based on state.
-  const renderScreen = () => {
-    if (currentScreen === "login") {
-      return (
-        <div className="screen login-screen">
-          <h1>Login Screen</h1>
-          <form>
-            <input type="text" placeholder="Player ID" />
-            <input type="password" placeholder="Password" />
-            <button type="button" onClick={() => setCurrentScreen("map")}>
-              Login
-            </button>
-          </form>
-          <p>
-            Don't have an account?{" "}
-            <span
-              className="link"
-              onClick={() => setCurrentScreen("register")}
-              style={{ cursor: "pointer", textDecoration: "underline" }}
-            >
-              Register
-            </span>
-          </p>
-        </div>
-      );
-    } else if (currentScreen === "register") {
-      return (
-        <div className="screen register-screen">
-          <h1>Register Screen</h1>
-          <form>
-            <input type="text" placeholder="Player ID" />
-            <input type="text" placeholder="Name" />
-            <input type="password" placeholder="Password" />
-            <button type="button" onClick={() => setCurrentScreen("login")}>
-              Register
-            </button>
-          </form>
-          <p>
-            Already have an account?{" "}
-            <span
-              className="link"
-              onClick={() => setCurrentScreen("login")}
-              style={{ cursor: "pointer", textDecoration: "underline" }}
-            >
-              Login
-            </span>
-          </p>
-        </div>
-      );
-    } else if (currentScreen === "map") {
-      return (
-        <div className="screen map-screen">
-          <h1>World Map</h1>
-          <p>Your map will be displayed here.</p>
-          <button type="button" onClick={() => setCurrentScreen("login")}>
-            Logout
-          </button>
-        </div>
-      );
-    } else {
-      return <div>Loading...</div>;
-    }
+  const handleLogin = (userData) => {
+    // In a real app, verify credentials via API.
+    setUser(userData);
+    setCurrentScreen("map");
   };
 
+  const handleRegister = (userData) => {
+    // Simulate successful registration and log in user.
+    setUser(userData);
+    setCurrentScreen("map");
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setCurrentScreen("login");
+  };
+
+  let content;
+  if (currentScreen === "login") {
+    content = (
+      <LoginScreen 
+        onLogin={handleLogin}
+        onSwitchToRegister={() => setCurrentScreen("register")}
+      />
+    );
+  } else if (currentScreen === "register") {
+    content = (
+      <RegisterScreen 
+        onRegister={handleRegister}
+        onSwitchToLogin={() => setCurrentScreen("login")}
+      />
+    );
+  } else if (currentScreen === "map") {
+    content = <MapScreen user={user} onLogout={handleLogout} />;
+  } else {
+    content = <div>Loading...</div>;
+  }
+
   return (
-    <div className="App">
-      {/* Simple header for the app */}
+    <div className="app-container">
       <header>
-        <h1>Blood & Valor</h1>
+        <h1>Blood &amp; Valor Kingdom Strategy Game</h1>
       </header>
-      {renderScreen()}
+      {content}
     </div>
   );
 }
