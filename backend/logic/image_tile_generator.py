@@ -1,7 +1,7 @@
 # backend/logic/image_tile_generator.py
 from PIL import Image
 from typing import List
-from backend.models import Tile
+from models import Tile
 
 # Define mapping from RGB to tile type
 COLOR_TO_TILE = {
