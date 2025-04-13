@@ -8,6 +8,15 @@ from db import game_state
 from logic.tile_generator import generate_world_map
 from logic.image_tile_generator import generate_map_from_image
 from player_data import create_player, get_player
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or specify your Vercel domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app = FastAPI()
 
