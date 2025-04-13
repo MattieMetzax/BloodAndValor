@@ -7,28 +7,18 @@ class Settlement(BaseModel):
     settlement_type: str  # "village", "town", "capital", etc.
     buildings: List[str] = []
 
-class Tile:
-    def __init__(self, id, tile_type, owner, settlements):
-        self.id = id
-        self.tile_type = tile_type
-        self.owner = owner
-        self.settlements = settlements
+# backend/models.py
+from pydantic import BaseModel
+from typing import List, Optional
 
-    def dict(self):
-        return {
-            "id": self.id,
-            "tile_type": self.tile_type,
-            "owner": self.owner,
-            "settlements": self.settlements
-        }
+class Tile(BaseModel):
+    id: str
+    tile_type: str
+    owner: Optional[str] = None
+    settlements: List[str] = []
+    x: int
+    y: int
 
-class Player:
-    def __init__(self, player_id, name):
-        self.player_id = player_id
-        self.name = name
-
-    def dict(self):
-        return {
-            "player_id": self.player_id,
-            "name": self.name
-        }
+class Player(BaseModel):
+    id: str
+    name: str
